@@ -15,8 +15,20 @@ class UsuarioController
 
     public function obtenerTodos()
     {
+        // Obtener los usuarios
         $usuarios = $this->usuarioModel->obtenerTodos();
-        echo json_encode($usuarios);
+
+        // Inicializar un array para almacenar los usuarios como arrays asociativos
+        $usuariosArray = [];
+
+        // Convertir cada usuario en un array asociativo
+        foreach ($usuarios as $usuario) {
+            $usuarioArray = $usuario->getProperties();
+            $usuariosArray[] = $usuarioArray;
+        }
+
+        // Codificar el array de usuarios como JSON y devolverlo
+        echo json_encode($usuariosArray);
     }
 
     public function obtenerPorId($id)
@@ -25,9 +37,8 @@ class UsuarioController
         echo json_encode($usuario);
     }
 
-    public function crear()
+    public function crear($datos)
     {
-        $datos = json_decode(file_get_contents('php://input'), true);
         $id = $this->usuarioModel->crear($datos);
         echo json_encode(['id' => $id]);
     }

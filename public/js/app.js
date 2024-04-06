@@ -7,6 +7,7 @@ $(document).ready(function () {
             type: 'GET',
             success: function (usuarios) {
                 $('#userList').empty();
+                usuarios = JSON.parse(usuarios);
                 usuarios.forEach(function (usuario) {
                     $('#userList').append(`
                         <tr>
